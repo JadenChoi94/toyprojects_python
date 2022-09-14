@@ -38,3 +38,6 @@ output=Label(tk, text="", bg="#52f277")
 output.pack()
 
 tk.mainloop()
+
+#how to make exe
+#pyinstaller -w -F qrcode_generator_gui.py >>  실행창 뜨지않게 설정하기 및 실행파일 하나만 생성되길 원한다면...
