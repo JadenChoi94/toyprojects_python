@@ -15,7 +15,6 @@ from PIL import Image
 import cv2
 
 cap=cv2.VideoCapture(0)
-
 sys.path.append("..")
 from object_detection.utils import ops as utils_ops
 
@@ -25,23 +24,14 @@ if StrictVersion(tf.__version__) < StrictVersion('1.9.0'):
 # ## Object detection imports
 # Here are the imports from the object detection module.
 
-# In[2]:
-
-
 from utils import label_map_util
-
 from utils import visualization_utils as vis_util
 
 
-# # Model preparation
-
-# In[3]:
+# Model preparation
 MODEL_NAME = 'inference_graphabc'
 PATH_TO_FROZEN_GRAPH = MODEL_NAME + '/frozen_inference_graph.pb'
 PATH_TO_LABELS = os.path.join('training', 'object-detection.pbtxt')
-
-
-# In[4]:
 
 detection_graph = tf.Graph()
 with detection_graph.as_default():
@@ -51,21 +41,18 @@ with detection_graph.as_default():
     od_graph_def.ParseFromString(serialized_graph)
     tf.import_graph_def(od_graph_def, name='')
 
-# In[5]:
 category_index = label_map_util.create_category_index_from_labelmap(PATH_TO_LABELS, use_display_name=True)
-# In[6]:
+
 def load_image_into_numpy_array(image):
   (im_width, im_height) = image.size
   return np.array(image.getdata()).reshape(
       (im_height, im_width, 3)).astype(np.uint8)
 
-# # Detection
-
-# In[7]:
+# Detection
 PATH_TO_TEST_IMAGES_DIR = 'test_images'
 TEST_IMAGE_PATHS = [ os.path.join(PATH_TO_TEST_IMAGES_DIR, 'image{}.jpg'.format(i)) for i in range(1, 7) ]
 IMAGE_SIZE = (12, 8)
-# In[8]:
+
 
 def run_inference_for_single_image(image, graph):
   with graph.as_default():
